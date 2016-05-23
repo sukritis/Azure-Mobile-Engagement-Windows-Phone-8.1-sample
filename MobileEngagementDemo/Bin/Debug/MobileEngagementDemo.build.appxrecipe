@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>SUKRITISHARMA</Machine>
+    <WindowsUser>sukritis</WindowsUser>
+    <TargetPlatformIdentifier>Windows Phone</TargetPlatformIdentifier>
+    <TargetOsVersion>6.3</TargetOsVersion>
+    <TargetOsDescription>Windows Phone 8.1</TargetOsDescription>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageIdentityName>652ea378-4b9d-41df-8430-cba90d92dff6</PackageIdentityName>
+    <IntermediateOutputPath>C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Debug\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Debug\MobileEngagementDemo.dll">
+      <PackagePath>MobileEngagementDemo.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\packages\azuresdk-mobileengagement-windowsphone.2.0.0\lib\wp81\Microsoft.Azure.Engagement.EngagementAgent.Portable.dll">
+      <PackagePath>Microsoft.Azure.Engagement.EngagementAgent.Portable.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\packages\azuresdk-mobileengagement-windowsphone.2.0.0\lib\wp81\Microsoft.Azure.Engagement.EngagementAgent.WP.dll">
+      <PackagePath>Microsoft.Azure.Engagement.EngagementAgent.WP.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\packages\azuresdk-mobileengagement-windowsphone.2.0.0\lib\wp81\Microsoft.Azure.Engagement.EngagementReach.Portable.dll">
+      <PackagePath>Microsoft.Azure.Engagement.EngagementReach.Portable.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\packages\azuresdk-mobileengagement-windowsphone.2.0.0\lib\wp81\Microsoft.Azure.Engagement.EngagementReach.WP.dll">
+      <PackagePath>Microsoft.Azure.Engagement.EngagementReach.WP.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\packages\azuresdk-mobileengagement-windowsphone.2.0.0\lib\wp81\Microsoft.Azure.Engagement.EngagementAgent.Portable.xml">
+      <PackagePath>Microsoft.Azure.Engagement.EngagementAgent.Portable.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\packages\azuresdk-mobileengagement-windowsphone.2.0.0\lib\wp81\Microsoft.Azure.Engagement.EngagementAgent.WP.xml">
+      <PackagePath>Microsoft.Azure.Engagement.EngagementAgent.WP.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\packages\azuresdk-mobileengagement-windowsphone.2.0.0\lib\wp81\Microsoft.Azure.Engagement.EngagementReach.Portable.xml">
+      <PackagePath>Microsoft.Azure.Engagement.EngagementReach.Portable.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\packages\azuresdk-mobileengagement-windowsphone.2.0.0\lib\wp81\Microsoft.Azure.Engagement.EngagementReach.WP.xml">
+      <PackagePath>Microsoft.Azure.Engagement.EngagementReach.WP.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\AlignmentGrid.png">
+      <PackagePath>Assets\AlignmentGrid.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\ApplicationIcon.png">
+      <PackagePath>Assets\ApplicationIcon.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\BadgeLogo.png">
+      <PackagePath>Assets\BadgeLogo.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\Logo.png">
+      <PackagePath>Assets\Logo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\SplashScreen.png">
+      <PackagePath>Assets\SplashScreen.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\SquareTile150x150.png">
+      <PackagePath>Assets\SquareTile150x150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\SquareTile71x71.png">
+      <PackagePath>Assets\SquareTile71x71.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\StoreLogo.png">
+      <PackagePath>Assets\StoreLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\WideLogo.png">
+      <PackagePath>Assets\WideLogo.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\Tiles\FlipCycleTileLarge.png">
+      <PackagePath>Assets\Tiles\FlipCycleTileLarge.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\Tiles\FlipCycleTileMedium.png">
+      <PackagePath>Assets\Tiles\FlipCycleTileMedium.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\Tiles\FlipCycleTileSmall.png">
+      <PackagePath>Assets\Tiles\FlipCycleTileSmall.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\Tiles\IconicTileMediumLarge.png">
+      <PackagePath>Assets\Tiles\IconicTileMediumLarge.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Assets\Tiles\IconicTileSmall.png">
+      <PackagePath>Assets\Tiles\IconicTileSmall.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Resources\EngagementIconCancel.png">
+      <PackagePath>Resources\EngagementIconCancel.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Resources\EngagementIconCloseDark.png">
+      <PackagePath>Resources\EngagementIconCloseDark.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Resources\EngagementIconCloseLight.png">
+      <PackagePath>Resources\EngagementIconCloseLight.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Resources\EngagementIconNotification.png">
+      <PackagePath>Resources\EngagementIconNotification.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Resources\EngagementIconOk.png">
+      <PackagePath>Resources\EngagementIconOk.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Resources\EngagementConfiguration.xml">
+      <PackagePath>Resources\EngagementConfiguration.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>

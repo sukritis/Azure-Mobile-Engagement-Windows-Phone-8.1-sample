@@ -1,0 +1,41 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="MobileEngagementDemo.SecondPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="MOBILE ENGAGEMENT DEMO" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="second page" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Button x:Name="BacktoMainBtn" Content="Back to Main Page" HorizontalAlignment="Left" Height="75" Margin="97,508,0,0" VerticalAlignment="Top" Width="244" Click="BacktoMainBtn_Click"/>
+            <Button x:Name="ActivityBtn1" Content="Start Activity 1" HorizontalAlignment="Left" Height="70" Margin="25,86,0,0" VerticalAlignment="Top" Width="199" Click="ActivityBtn1_Click"/>
+            <TextBox x:Name="Activity1Text" HorizontalAlignment="Left" Height="70" Margin="247,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"/>
+            <Button x:Name="ActivityBtn2" Content="Start Activity 2" HorizontalAlignment="Left" Height="70" Margin="25,161,0,0" VerticalAlignment="Top" Width="199" Click="ActivityBtn2_Click"/>
+            <TextBox x:Name="Activity2Text" HorizontalAlignment="Left" Height="70" Margin="247,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"/>
+            <TextBlock HorizontalAlignment="Left" Height="35" Margin="40,27,0,0" TextWrapping="Wrap" Text="ACTIVITIES REPORTING" VerticalAlignment="Top" Width="248"/>
+
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

@@ -1,0 +1,2077 @@
+<?xml version="1.0"?><doc>
+    <assembly>
+        <name>Microsoft.Azure.Engagement.EngagementReach.Portable</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Azure.Engagement.EngagementPortableReach">
+            <summary>
+            Engagement Reach handler.
+            Initialize the SDK and manage the push queue.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementPortableReach.MAX_OUT_OF_APP_IDS">
+            <summary>
+            The maximum number ID to store in the pending out of app message list.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementPortableReach.sInstance">
+            <summary>
+            Module instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementPortableReach.mCommandWorker">
+            <summary>
+            Thread safe command spool.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementPortableReach.mAppLifecycle">
+            <summary>
+            The Reach application life cycle manager, it handles application life cycle events.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementPortableReach.mAgentLifeCycle">
+            <summary>
+            The Agent application life cycle manager, it handles application life cycle events.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementPortableReach.mInteractiveMessageStateMachine">
+            <summary>
+            The interactive message state machine, it manages interractive reach push messages.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementPortableReach.mParser">
+            <summary>
+            A JSON parser to parse raw messages received from backend.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementPortableReach.mOutOfAppMessageMonitor">
+            <summary>
+            This monitor takes care of the out of app message life cycle.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.#ctor(Microsoft.Azure.Engagement.ReachFactory)">
+            <summary>
+            protected constructor to prevent instanciation outside child.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.PortableInit``2(``0,``1)">
+            <summary>
+            Initialize reach asynchronously, this avoids an excessive delay in the customer's app initialization.
+            It is not asynchronous itself so it needs to be run on a Task Factory.
+            </summary>
+            <typeparam name="T">The Task type.</typeparam>
+            <typeparam name="GenericStateMachine">The default reach machine state type.</typeparam>
+            <param name="continuation">The continuation task.</param>
+            <param name="savedStateMachine">The saved state machine.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.InitInteractiveStateMachine(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            Initialize the interactive state machine and start it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.SetToken(System.String)">
+            <summary>
+            Send the device token to the backend for MPNS purpose.
+            </summary>
+            <param name="token">The device token</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.GetPendingMessages">
+            <summary>
+            Get pending messages from backend.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.GetOutOfAppMessage(System.Int32)">
+            <summary>
+            Get the corresponding out of app message with the given Engagement push ID.
+            </summary>
+            <param name="engagementPushID">The Engagement push identifier.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.PrintMessages">
+            <summary>
+            Print messages from the spool.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.BindChannel">
+            <summary>
+            Bind the push channel to MPNS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.UnbindChannel">
+            <summary>
+            Unbind the push channel to MPNS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.ProcessRawMessages(System.String)">
+            <summary>
+            Process incoming raw messages into Engagement messages.
+            </summary>
+            <param name="messages">The raw data containing the messages</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.ProcessDataPush(Microsoft.Azure.Engagement.EngagementReachContent)">
+            <summary>
+            Process a datapush
+            </summary>
+            <param name="content">The datapush</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.EnableNativePush">
+            <summary>
+            Enable the native push (MPNS) for Engagement.Reach. This will allow the reach module to receive push notifications from MPNS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.DisableNativePush">
+            <summary>
+            Disable the native push (MPNS) for Engagement.Reach. This will disallow the reach module to receive push notifications from MPNS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.StartRetrievingLaunchMessage">
+            <summary>
+            Indicate that the SDK is trying to retrieve the launch message.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.CompleteRetrievingLaunchMessage">
+            <summary>
+            Indicate that the SDK has received the launch message.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.FailRetrievingLaunchMessage">
+            <summary>
+            Indicate that the SDK has failed to retrieve the launch message.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnRawMessagesReceived(System.Object,Microsoft.Azure.Engagement.MessagesApiEventArgs)">
+            <summary>
+            Called when raw messages are received from backend.
+            </summary>
+            <param name="sender">The event sender.</param>
+            <param name="args">The <see cref="T:Microsoft.Azure.Engagement.MessagesApiEventArgs"/> sInstance containing the event data.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnSuspended">
+            <summary>
+            Called when the application is suspended.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnSessionIdled(System.Object,System.EventArgs)">
+            <summary>
+            Called when the session has been idled.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="args">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnEndSession(System.Object,System.EventArgs)">
+            <summary>
+            Session ending handler.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnProcessPendingMessages(System.Object,Microsoft.Azure.Engagement.MessagesApiEventArgs)">
+            <summary>
+            Pending messages handler.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnProcessOutOfAppMessage(System.Int32)">
+            <summary>
+            A message has resumed the application, an instance of the interactive content state machine is currently running.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnHasMessage">
+            <summary>
+            There is a message ready to be shown to the user.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnStartActivity(System.Object,System.EventArgs)">
+            <summary>
+            Start activity handler.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnReachMessageException">
+            <summary>
+            Handler for reach message exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnNotificationDisplayed">
+            <summary>
+            Reach notification displayed handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnNotificationActioned">
+            <summary>
+            Reach notification actioned handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnNotificationDismissed">
+            <summary>
+            Reach notification dismissed handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnContentDisplayed">
+            <summary>
+            Reach content displayed handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnContentActioned(System.String)">
+            <summary>
+            Reach content actioned handler.
+            </summary>
+            <param name="body">A feedback body.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnContentDismissed">
+            <summary>
+            Reach content dismissed handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnAppResumption">
+            <summary>
+            Application resumption handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnNotificationRemoved">
+            <summary>
+            Reach notification removed handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnContentRemoved">
+            <summary>
+            Reach content removed handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnAppSuspended">
+            <summary>
+            App Suspend.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementPortableReach.OnPushServicePropertyChange(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            Handle push service property change.
+            <remarks> 
+            DON'T set the <see cref="P:Microsoft.Azure.Engagement.PushService.PushServiceState"/> property in here it will dead lock the push service.
+            </remarks>
+            </summary>
+            <param name="sender">The event sender.</param>
+            <param name="e">The event argument.</param>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.EngagementPortableReach.MessagesFromApiProcessed">
+            <summary>
+            Occurs when messages from API are processed by agent.
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.EngagementPortableReach.DataPushStringReceived">
+            <summary>
+            Event when receiving a string datapush.
+            
+            The callback must of the form :
+            <b>bool</b> OnDataPushStringReceived(<b>string body</b>) {}
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.EngagementPortableReach.DataPushBase64Received">
+            <summary>
+            Event when receiving a base64 datapush.
+            
+            The callback must be of the form :
+            <b>bool</b> OnDataPushBase64Received(<b>byte[] decodedBody</b>, <b>string encodedBody</b>) {}
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.EngagementPortableReach.PushMessageReceived">
+            <summary>
+            Event when receiving a push message.
+            
+            The callback must be of the form :
+            void OnPushMessageReceived(<b>int id</b>, <b>bool replyTo</b>, <b>string payload</b>) {}
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.EngagementPortableReach.RetrieveLaunchMessageStarted">
+            <summary>
+            Invoked when Engagement is about to retrieve the push message that launched the application (from MPNS).
+            It is a good opportunity to start displaying a message to the end user indicating that data is being loaded.
+            
+            This code will be executed on the UI Thread. You don't have to call Dispatcher.BeginInvoke().
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.EngagementPortableReach.RetrieveLaunchMessageCompleted">
+            <summary>
+            Invoked when Engagement received the push message that launched the application.
+            Use this opportunity to hide any loading message and display appropriate content to the end user.
+            
+            This code will be executed on the UI Thread. You don't have to call Dispatcher.BeginInvoke().
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.EngagementPortableReach.RetrieveLaunchMessageFailed">
+            <summary>
+            Invoked when Engagement failed to retrieve the push message that launched the application.
+            Use this opportunity to hide any loading message and to display a dialog to the end user 
+            indicating that the message could not be fetched.
+            
+            This code will be executed on the UI Thread. You don't have to call Dispatcher.BeginInvoke().
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementPortableReach.Instance">
+            <summary>
+            Gets the unique instance of the internal Engagement reach.
+            </summary>
+            <value>
+            The unique instance.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementPortableReach.PendingOutOfAppMessages">
+            <summary>
+            The pending out of app message list before they are dropped or processed by the content state machine.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementMessage">
+            <summary>
+            EngagementMessage (contains a payload and some metadata)
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementMessage.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Engagement.EngagementMessage"/> class with default values.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementMessage.IsPayloadType(System.String)">
+            <summary>
+            Indicate if the payload is of a given type.
+            </summary>
+            <param name="expected">The expected type of the payload.</param>
+            <returns>True if it corresponds, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementMessage.GetPayloadAsObject">
+            <summary>
+            Get the payload of the message as a EngagementReachAnnouncement.
+            </summary>
+            <exception cref="T:Microsoft.Azure.Engagement.EngagementInvalidPayloadException"></exception>
+            <returns>A EngagementReachAnnouncement object</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementMessage.ToString">
+            <summary>
+            Print the message
+            </summary>
+            <returns>A json-formatted string</returns>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementMessage.Id">
+            <summary>
+            Message id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementMessage.Payload">
+            <summary>
+            Message payload
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementMessage.ReplyTo">
+            <summary>
+            Message replyto id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementMessage.NextState">
+            <summary>
+            The next state in the interactive state machine for this content.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementMessage.NotificationAlreadyBeenDisplayed">
+            <summary>
+            Know if notification has already been displayed
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementMessage.ContentAlreadyBeenDisplayed">
+            <summary>
+            Know if announcement has already been displayed
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachContent">
+            <summary>
+            EngagementReachContent
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachContent.DeviceIdRegex">
+            <summary>
+            Device id regex (cached)
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachContent.mDeviceId">
+            <summary>
+            The device id needs to be stored locally because if the application is killed then restored on this announcement,
+            then, There is no possibility to be sure that the portable part of the Engagement SDK is instantiated.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.#ctor(Microsoft.Azure.Engagement.EngagementMessage)">
+            <summary>
+            Create a content
+            </summary>
+            <param name="message">The message used to create the content</param>
+            <exception cref="T:Microsoft.Azure.Engagement.EngagementInvalidPayloadException">The paylod may be invalid when created.</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.Show">
+            <summary>
+            Present the content as a notification.
+            </summary>
+            <exception cref="T:Microsoft.Azure.Engagement.EngagementInvalidNotificationCreationException">
+            If the notification cannot be created.
+            </exception>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.ShowContent">
+            <summary>
+            Show the content to the user.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.RemoveNotification">
+            <summary>
+            Remove a notification from UI.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.RemoveContent">
+            <summary>
+            Remove a content from UI.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.ConvertDeviceIdTag(System.String)">
+            <summary>
+            {deviceid} tag =&gt; real device id converter
+            </summary>
+            <param name="data">String to examine</param>
+            <returns>Converted string</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.ParseDeviceId(Microsoft.Azure.Engagement.EngagementReachPayload)">
+            <summary>
+            Parse the (eventual) url or body of the content and change
+            the {deviceid} tag to the real device id.
+            </summary>
+            <param name="payload"> a Engagement reach payload </param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.SendFeedback(System.String,System.String)">
+            <summary>
+            Helper to send a feedback to the engagement backend
+            </summary>
+            <param name="status">Type of the feedback</param>
+            <param name="body">An eventual body to send with the feedback</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.TrashIfExpiry">
+            <summary>
+            Test if the content is expirable, and trash it if needed
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.DisplayNotification(System.Boolean)">
+            <summary>
+            Signal to display the notification
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.ActionNotification(System.Boolean)">
+            <summary>
+            Signal to action the notification
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.ExitInAppNotification">
+            <summary>
+            Signal to exit the current notification
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.DisplayContent">
+            <summary>
+            Signal to display the content
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.ActionContent(System.String)">
+            <summary>
+            Signal to action the content
+            </summary>
+            <param name="body">Payload</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.DismissContent">
+            <summary>
+            Signal to exit the content
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachContent.Drop">
+            <summary>
+            Signal to drop the content
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachContent.Message">
+            <summary>
+            The message of the current content
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachContent.Payload">
+            <summary>
+            Content announcement
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachContent.DeviceId">
+            <summary>
+            The device id needs to be preserved for a later standalone use. 
+            For example when the App goes tombstone then the page is loaded by the system before the Engagement instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachAnnouncement">
+            <summary>
+            EngagementReachAnnouncement
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPagePayload">
+            <summary>
+            All page content should inherit from this class (announcement, poll)
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachInteractivePayload">
+            <summary>
+            All reach content (except datapush) should inherit from this class.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPayload">
+            <summary>
+            EngagementReachPayload
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.#ctor">
+            <summary>
+            Create a EngagementReachPayload
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.GetReachType">
+            <summary>
+            Indicate the type of the reach payload.
+            </summary>
+            <returns>The string representation of the reach type.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.HasExpiry">
+            <summary>
+            Indicate if the payload has an expiration date.
+            </summary>
+            <returns>True if there is an expiry, false otherwise</returns>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.Id">
+            <summary>
+            Payload id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.Category">
+            <summary>
+            Payload category
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.Expiry">
+            <summary>
+            Payload expiration date
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPayload.ActionPayload">
+            <summary>
+            ActionPayload
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachPayload.ActionPayload.DEFAULT_LABEL">
+            <summary>
+            Default value
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.ActionPayload.#ctor">
+            <summary>
+            Create an ActionPayload
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.ActionPayload.Label">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.ActionPayload.Url">
+            <summary>
+            Action URL
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPayload.AnswerPayload">
+            <summary>
+            Answer payload
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachPayload.AnswerPayload.mIsChecked">
+            <summary>
+            Check status
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.AnswerPayload.#ctor">
+            <summary>
+            Create an AnswerPayload
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.AnswerPayload.NotifyPropertyChanged(System.String)">
+            <summary>
+            Notify changes on given property
+            </summary>
+            <param name="propertyName">Property's name</param>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.AnswerPayload.Id">
+            <summary>
+            Answer id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.AnswerPayload.IsChecked">
+            <summary>
+            Check status
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.AnswerPayload.Value">
+            <summary>
+            Answer value
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.AnswerPayload.GroupName">
+            <summary>
+            Answer group name
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.EngagementReachPayload.AnswerPayload.PropertyChanged">
+            <summary>
+            PropertyChanged event
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPayload.BehaviorPayload">
+            <summary>
+            BehaviorPayload
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.BehaviorPayload.#ctor">
+            <summary>
+            Create a BehaviorPayload
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.BehaviorPayload.Session">
+            <summary>
+            Session
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.BehaviorPayload.Activities">
+            <summary>
+            Activities
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPayload.DataTypePayload">
+            <summary>
+            Format of a payload
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachPayload.DataTypePayload.Text">
+            <summary>
+            Text
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachPayload.DataTypePayload.Html">
+            <summary>
+            HTML
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachPayload.DataTypePayload.Base64">
+            <summary>
+            Base64
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPayload.ExitPayload">
+            <summary>
+            ExitPayload
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachPayload.ExitPayload.DEFAULT_LABEL">
+            <summary>
+            Default value for the exit payload
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.ExitPayload.#ctor">
+            <summary>
+            Create an ExitPayload
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.ExitPayload.Label">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPayload.ExpiryPayload">
+            <summary>
+            ExpiryPayload
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachPayload.ExpiryPayload.NO_EXPIRY">
+            <summary>
+            No expiry constant
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.ExpiryPayload.#ctor">
+            <summary>
+            Create an expiry payload
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.ExpiryPayload.IsLocalTimeZone">
+            <summary>
+            Indicate if it is in a local time zone
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.ExpiryPayload.Date">
+            <summary>
+            Expiry date
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPayload.NotificationPayload">
+            <summary>
+            NotificationPayload
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.NotificationPayload.#ctor">
+            <summary>
+            Create a notification payload
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.NotificationPayload.IsCloseable">
+            <summary>
+            Indicate if it is closeable 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.NotificationPayload.HasIcon">
+            <summary>
+            Indicate if it has an icon
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.NotificationPayload.HasTickerIcon">
+            <summary>
+            Indicate if it has a ticker icon
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.NotificationPayload.Title">
+            <summary>
+            Notification title
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.NotificationPayload.Message">
+            <summary>
+            Notification message
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.NotificationPayload.Image">
+            <summary>
+            Notification image
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPayload.QuestionPayload">
+            <summary>
+            QuestionPayload
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPayload.QuestionPayload.#ctor">
+            <summary>
+            Create a QuestionPayload
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.QuestionPayload.Id">
+            <summary>
+            Question id
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.QuestionPayload.Title">
+            <summary>
+            Question title
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPayload.QuestionPayload.Answers">
+            <summary>
+            Answers
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachInteractivePayload.#ctor">
+            <summary>
+            Create a EngagementReachInteractivePayload
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachInteractivePayload.Notification">
+            <summary>
+            Notification
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachInteractivePayload.Action">
+            <summary>
+            Action
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachInteractivePayload.Exit">
+            <summary>
+            Exit
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachInteractivePayload.Behavior">
+            <summary>
+            Behavior
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPagePayload.#ctor">
+            <summary>
+            Create a EngagementReachPagePayload
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPagePayload.GetReachType">
+            <summary>
+            Indicate the type of the reach payload.
+            </summary>
+            <returns>
+            The string representation of the reach type.
+            </returns>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPagePayload.Title">
+            <summary>
+            Page title
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPagePayload.Body">
+            <summary>
+            Page body
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachAnnouncement.#ctor">
+            <summary>
+            Create a EngagementReachAnnouncement
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachAnnouncement.GetReachType">
+            <summary>
+            Get the reach type
+            </summary>
+            <returns>EngagementReachKind</returns>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachAnnouncement.Type">
+            <summary>
+            announcement type
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementTickle">
+            <summary>
+            The EngagementTickle is a class that wraps a tickle push from the Engagement back-end.
+            It's only purpose is to find whether or not the app can refresh its message list
+            when receiving a raw push from the microsoft push.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementTickle.#ctor">
+            <summary>
+            Create a EngagementTickle
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementTickle.AppId">
+            <summary>
+            Application id
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachDatapush">
+            <summary>
+            EngagementReachDataPush
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachDatapush.#ctor">
+            <summary>
+            Create a EngagementReachDataPush
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachDatapush.GetReachType">
+            <summary>
+            Get the reach type
+            </summary>
+            <returns>EngagementReachKind</returns>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachDatapush.Type">
+            <summary>
+            Datapush type
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachDatapush.Body">
+            <summary>
+            Datapush body
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachNotificationAnnouncement">
+            <summary>
+            EngagementReachNotificationAnnouncement
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachNotificationAnnouncement.#ctor">
+            <summary>
+            Create an empty EngagementReachNotificationAnnouncement
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachNotificationAnnouncement.GetReachType">
+            <summary>
+            Get the reach type
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachPoll">
+            <summary>
+            EngagementReachPoll payload
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPoll.#ctor">
+            <summary>
+            Create a EngagementReachPoll
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachPoll.GetReachType">
+            <summary>
+            Return the payload type
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachPoll.Questions">
+            <summary>
+            Questions
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.AbstractContentState">
+            <summary>
+            This class is for internal use only, you don't need to use it directly. 
+            It is used for internal serialization into storage.
+            This class is shared between platforms and must be public for compatibility purpose.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.AbstractStopableState">
+            <summary>
+            This class is for internal use only, you don't need to use it directly. 
+            It is used for internal serialization into storage.
+            This class is shared between platforms and must be public for compatibility purpose.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.InteractiveContentDefaultState">
+            <summary>
+            This class is for internal use only, you don't need to use it directly. 
+            It is used for internal serialization into storage.
+            This class is shared between platforms and must be public for compatibility purpose.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnEntry(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method is executed upon entry to a state.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnProcess(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method executes a long job within the current state. It is the 'do' action in UML state machine.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnExit(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This is the last methode executed after other state and transition logic.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnAppSuspended(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The application is suspended.
+            </summary>
+            <param name="stateMachine">The state machine.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnAppResumption(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The application is resuming.
+            </summary>
+            <param name="stateMachine">The state machine.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnEndSession(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current session is ending.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnProcessPendingMessages(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            There are new messages from backend, the state machine have to process them.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnProcessLaunchingMessage(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            A launching message has resumed the application, process it.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnHasMessage(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            There is one notification to display.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnStartActivity(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            An activity is starting.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnReachMessageException(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This exception occurs when something goes wrong in the message processing.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnNotificationDisplayed(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current notification is displayed, the user can interact with it.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnNotificationActioned(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current notification has been actioned by the user.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnNotificationDismissed(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current notification has been dismissed by the user.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnContentDisplayed(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current content is displayed, the user can interact with it.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnContentActioned(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine,System.String)">
+            <summary>
+            The current content has been actioned by the user.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+            <param name="body">A feedback body.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnContentDismissed(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current content has been dismissed by the user.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnNotificationRemoved(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current notification has been removed.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.InteractiveContentDefaultState.OnContentRemoved(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current content has been removed.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractStopableState.OnEntry(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method is executed upon entry to a state.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractContentState.OnProcessLaunchingMessage(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            There are new messages from backend, the state machine have to process them.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.AbstractNotificationState">
+            <summary>
+            This state regroups every transition upon working notifications.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractNotificationState.OnProcessLaunchingMessage(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            There is a launching message to process, the state machine have to handle it.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractNotificationState.OnStartActivity(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            An activity is starting.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractNotificationState.OnEndSession(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current session is ending.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.DisplayingContent">
+            <summary>
+            Send a request to the UI logic to display the current content view.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.DisplayingContent.OnEntry(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method is executed upon entry to a state.
+            </summary>
+            <param name="stateMachine">The state machine.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.DisplayingContent.OnProcess(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method executes a long job within the current state. It is the 'do' action in UML state machine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.DisplayingContent.OnContentDisplayed(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current content is displayed, the user can interact with it.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.DisplayingNotification">
+            <summary>
+            Send a request to the UI logic to display the current notification view.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.DisplayingNotification.OnProcess(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method executes a long job within the current state. It is the 'do' action in UML state machine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.DisplayingNotification.OnNotificationDisplayed(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current notification is displayed, the user can interact with it.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.DisplayingNotification.OnReachMessageException(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This exception occurs when something goes wrong in the message processing.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine">
+            <summary>
+            This class is for internal use only, you don't need to use it directly. 
+            It is used for internal serialization into storage.
+            This class is shared between platforms and must be public for compatibility purpose.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.mCommandWorker">
+            <summary>
+            Manage command spool. The state machine starts the worker when it is ready.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.mAppLifecycle">
+            <summary>
+            Manage command spool. The state machine starts the worker when it is ready.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.#ctor(Microsoft.Azure.Engagement.MessageSpool,Microsoft.Azure.Engagement.CommandWorker)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine"/> class.
+            </summary>
+            <param name="messageSpool">A storage dedicated to Engagement messages.</param>
+            <param name="commandWorker">The worker wich executes reach commands.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.#ctor(Microsoft.Azure.Engagement.EngagementReachContent,Microsoft.Azure.Engagement.InteractiveContentDefaultState)">
+            <summary>
+            This constructor is only used for serialisation purpose.
+            </summary>
+            <param name="content">The content to serialize.</param>
+            <param name="contentState">The state of the content to serialize.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.Start(System.Boolean,Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            Start the state machine. It wait for UI, watch for a launching message then proceed the first message if any.
+            </summary>
+            <param name="instancePreserved"><c>true</c> or <c>false</c> whether the Reach instance is preserved or not.</param>
+            <param name="savedStateMachine">The saved state machine.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.Stop">
+            <summary>
+            Stop the state machine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.ChangeState(Microsoft.Azure.Engagement.InteractiveContentDefaultState)">
+            <summary>
+            Update current state with next state. 
+            </summary>
+            <param name="nextContentState"> The next state of the state machine. </param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnAppSuspended">
+            <summary>
+            Called when the application is suspended.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnAppResumption">
+            <summary>
+            Called when application is resuming.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnEndSession">
+            <summary>
+            Handler for session ending.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnProcessPendingMessages">
+            <summary>
+            There are new messages from backend, the state machine have to process them.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnProcessLaunchingMessage(System.Int32)">
+            <summary>
+            A message has resumed the application, process this message now.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnHasMessage">
+            <summary>
+            There is one notification to display.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnStartActivity">
+            <summary>
+            Handler for activity startup.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnReachMessageException">
+            <summary>
+            This exception occurs when something goes wrong in the payload processing.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnNotificationDisplayed">
+            <summary>
+            The current notification is displayed, the user can interact with it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnNotificationActioned">
+            <summary>
+            The current notification has been actioned by the user.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnNotificationDismissed">
+            <summary>
+            The current notification has been dismissed by the user.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnContentDisplayed">
+            <summary>
+            The current content is displayed, the user can interact with it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnContentActioned(System.String)">
+            <summary>
+            The current content has been actioned by the user.
+            </summary>
+            <param name="body">A feedback body.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnContentDismissed">
+            <summary>
+            The current content has been dismissed by the user.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnNotificationRemoved">
+            <summary>
+            The current notification has been removed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OnContentRemoved">
+            <summary>
+            The current content has been removed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.OutOfAppMessagePostProcessing(System.Int32)">
+            <summary>
+            Prepare this out off app message to be handled by the current state.
+            </summary>
+            <param name="outOfAppMessageId">The engagement message ID coming with that system notification.</param>
+            <returns>
+            true if this out of app message can be forwarded to the current state, false otherwise.
+            </returns>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.CurrentContentState">
+            <summary>
+            The current state of the state machine.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.CurrentContent">
+            <summary>
+            The current message.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine.MessageSpool">
+            <summary>
+            The spool of messages.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.MessageSpool.mListLock">
+            <summary>
+            A global list locker on the content manager for the critical sections.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.MessageSpool.Remove(Microsoft.Azure.Engagement.EngagementMessage)">
+            <summary>
+            Remove a message from the content manager.
+            </summary>
+            <param name="message">The message to delete</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.MessageSpool.saveMessages">
+            <summary>
+            Explicitly persists the message list. The is used to save updated messages. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.MessageSpool.Add(System.Collections.Generic.List{Microsoft.Azure.Engagement.EngagementMessage})">
+            <summary>
+            Add a list of new messages to the content manager.
+            </summary>
+            <param name="messages">The new messages</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.MessageSpool.Scan">
+            <summary>
+            Look for an eligible message (the message with highest priority) and return it.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.MessageSpool.CopyMessages">
+            <summary>
+            Create a copy of the logs awaiting in the spool.
+            </summary>
+            <returns>Logs copy</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.MessageSpool.Contains(System.Int32)">
+            <summary>
+            Tell wether the list contains the element with the given id or not.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.MessageSpool.SetFirst(Microsoft.Azure.Engagement.EngagementMessage)">
+            <summary>
+            Move or add an existing message to the first place in the list if it's not already the case.
+            </summary>
+            <param name="message">The Engagement message to set.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.MessageSpool.Messages">
+            <summary>
+            Get or Set the Message list
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.RemovingNotification">
+            <summary>
+            Removing the push notification from the view to prepare displaying the push content.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.RemovingNotification.OnProcess(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method is executed upon entry to a state.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.RemovingNotification.OnNotificationRemoved(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The notification is removed
+            </summary>
+            <param name="stateMachine">The state machine.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.TerminatingContent">
+            <summary>
+            This class is for internal use only, you don't need to use it directly. 
+            It is used for internal serialization into storage.
+            This class is shared between platforms and must be public for compatibility purpose.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.TerminatingContent.OnProcess(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method executes a long job within the current state. It is the 'do' action in UML state machine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.TerminatingContent.OnContentRemoved(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The content is removed
+            </summary>
+            <param name="stateMachine">The state machine.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.TerminatingNotification">
+            <summary>
+            Terminate this notification by waiting for the notification to be removed from the view then resume the state machine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.TerminatingNotification.OnProcess(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method executes a long job within the current state. It is the 'do' action in UML state machine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.TerminatingNotification.OnNotificationRemoved(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The notification is removed
+            </summary>
+            <param name="stateMachine">The state machine.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.WaitingContentInteraction">
+            <summary>
+            Wait for user input (Action or Dismiss) on the Content.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingContentInteraction.OnEntry(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method is executed upon entry to a state.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingContentInteraction.OnContentActioned(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine,System.String)">
+            <summary>
+            The current content has been actioned by the user.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+            <param name="body">A feedback body.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingContentInteraction.OnContentDismissed(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current content has been dismissed by the user.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingContentInteraction.OnStartActivity(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            An activity is starting.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.WaitingNextMessage">
+            <summary>
+            Check for one eligible message from the message list for processing.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNextMessage.OnEntry(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method is executed upon entry to a state.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNextMessage.OnHasMessage(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            There is one notification to display.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNextMessage.OnProcessPendingMessages(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            There are new messages from backend, the state machine have to process them.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNextMessage.OnProcessLaunchingMessage(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            A launching message has resumed the application, process it.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNextMessage.OnStartActivity(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            An activity is starting.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNextMessage.OnEndSession(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current session is ending.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNextMessage.OnReachMessageException(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This exception occurs when something goes wrong in the message processing.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.WaitingNotificationInteraction">
+            <summary>
+            Wait for user input (Action or Dismiss) on the Notification.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNotificationInteraction.OnEntry(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            This method is executed upon entry to a state.
+            </summary>
+            <param name="stateMachine">The state machine.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNotificationInteraction.OnNotificationActioned(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current notification has been actioned by the user.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.WaitingNotificationInteraction.OnNotificationDismissed(Microsoft.Azure.Engagement.AbstractInteractiveContentStateMachine)">
+            <summary>
+            The current notification has been dismissed by the user.
+            </summary>
+            <param name="stateMachine">The State machine that manage interactive content states.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.IEngagementReachPage">
+            <summary>
+            The implementation (EngagementReachPage) needs a generic. We cannot use the equality
+            check with the implementation when testing if a page is a content of a push.
+            This is why we have this interface (for the moment).
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.IEngagementUI.ShowNotification(Microsoft.Azure.Engagement.EngagementReachContent)">
+            <summary>
+            Create and show a notification for the current page.
+            If an exception is catched during the creation, we throw it and let the
+            caller handles it.
+            </summary>
+            <returns>The notification view</returns>
+            <exception cref="T:System.Exception">If an error occurred during the execution</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.IEngagementUI.ShowContent(Microsoft.Azure.Engagement.EngagementReachContent)">
+            <summary>
+            Show the content of a message to the user (poll and announcement).
+            </summary>
+            <param name="content">A Engagement reach content to show.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.IEngagementUI.RemoveNotification">
+            <summary>
+            Remove a Engagement notification from the current view.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.IEngagementUI.RemoveContent">
+            <summary>
+            Remove a Engagement content from the current view.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.IEngagementUI.TryNavigateTo(System.String)">
+            <summary>
+            Try to navigate to the given URI if the uri is valid
+            </summary>
+            <param name="uri">Uri of the page</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.IEngagementUI.WaitForUI(System.Action)">
+            <summary>
+            Wait for the UI until a page is created.
+            Then, invoke a callback. 
+            </summary>
+            <param name="callback">The result callback to be run on UI</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.IChannel">
+            <summary>
+            The Channel object is the link between MPNS and the SDK.
+            It establishes the channel, set the uri and the toast.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.IChannel.Bind">
+            <summary>
+            Initialize the HttpNotificationChannel.
+            Find the channel, create it if needed and attach handlers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.IChannel.Unbind">
+            <summary>
+            Unbind the channel
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.PushService">
+            <summary>
+            The push service handles the transaction between the engagement backend and the SDK.
+            It's a low level object that doesn't do any processing.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.PushService.mPushServiceState">
+            <summary>
+            The push service state is the current state of the service in the push service life cycle.
+            This is an atomic type, no need for locking this but we need to tag it has volatile 
+            to bypass some none thread safe compiler optimisation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.PushService.mLifeCycleLock">
+            <summary>
+            This monitor takes care of the push service life cycle.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.PushService.Reset">
+            <summary>
+            Re-initialize the push service life cycle.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.PushService.OnPropertyChanged(System.String)">
+            <summary>
+            Create the property changed method to raise the event.
+            </summary>
+            <param name="name">The name of the property.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.PushService.PushServiceState">
+            <summary>
+            Thread safe property on the current push service state.
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.PushService.MessagesApiResponded">
+            <summary>
+            Event invoked when the messages API has responded to a request.
+            Provides an event args containing the response code and the result (if any).
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Engagement.PushService.PropertyChanged">
+            <summary>
+            Event invoked when a property change in the push service.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.PushService.PushServiceLifeCycle">
+            <summary>
+            Push service life cycle:
+            
+            INIT         : The push service is started but no get message performed yet.
+              |
+            GET_MESSAGE  : The get message request has been made waiting for an answer.
+              |
+            DONE         : All push messages from backend have been made.
+            
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.PushService.PushServiceProperties">
+            <summary>
+            The list of available properties to subscribe for property change event.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachFeedback">
+            <summary>
+            EngagementReachFeedback
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachFeedback.DROPPED">
+            <summary>
+            Dropped
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachFeedback.IN_APP_NOTIFICATION_DISPLAYED">
+            <summary>
+            In app notification displayed
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachFeedback.SYSTEM_NOTIFICATION_DISPLAYED">
+            <summary>
+            System notification displayed
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachFeedback.IN_APP_NOTIFICATION_ACTIONED">
+            <summary>
+            In app notification actioned
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachFeedback.SYSTEM_NOTIFICATION_ACTIONED">
+            <summary>
+            In app notification actioned
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachFeedback.IN_APP_NOTIFICATION_EXITED">
+            <summary>
+            In app notification exited
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachFeedback.CONTENT_DISPLAYED">
+            <summary>
+            Content displayed
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachFeedback.CONTENT_ACTIONED">
+            <summary>
+            Content actioned
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachFeedback.CONTENT_EXITED">
+            <summary>
+            Content exited
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachKind">
+             <summary>
+             Ugly, but hey, c# doesn't support string enum as Java does.
+             Yep, probably one of the only things that Java does better than c#. :)
+            
+             It could be nice to create an enum with a System.ComponentModel.DescriptionAttribute
+             and using reflection to get the value. One day.
+             But for the moment, it's good enough.
+            
+             See : 
+             - http://blog.spontaneouspublicity.com/associating-strings-with-enums-in-c
+             - http://stackoverflow.com/questions/424366/c-sharp-string-enums
+             </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachKind.NOTIFICATION_ANNOUNCEMENT">
+            <summary>
+            Notification announcement type
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachKind.ANNOUNCEMENT">
+            <summary>
+            announcement type
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachKind.POLL">
+            <summary>
+            Poll type
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.EngagementReachKind.DATAPUSH">
+            <summary>
+            Datapush type
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.SizedList`1">
+            <summary>
+            The sized list is a concurrent list with a limited capacity of item.
+            <remarks>The ctor of this class is not thread safe, other methods are.</remarks>
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.SizedList`1.mList">
+            <summary>
+            The shared list.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.SizedList`1.mListLock">
+            <summary>
+            A global locker on the shared queue for the critical sections.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.SizedList`1.#ctor(System.Int32)">
+            <summary>
+            Create a sized limited queue.
+            <remarks>This ctor is not thread safe.</remarks>
+            </summary>
+            <param name="size">The definitive size of the queue.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.SizedList`1.Add(`0)">
+            <summary>
+            Add an element to the list.
+            <remarks>This method is thread safe.</remarks>
+            </summary>
+            <param name="item">The new messages</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.SizedList`1.Remove(`0)">
+            <summary>
+            Remove an item from the list.
+            </summary>
+            <param name="item">The item to be removed.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.SizedList`1.Contains(`0)">
+            <summary>
+            Tell whether the list contains the element with the given item or not.
+            </summary>
+            <param name="item">The item to search for.</param>
+            <returns>Whether the list contains the given item or not.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachFeedbackEventArgs">
+            <summary>
+            Feedback event args
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachFeedbackEventArgs.#ctor">
+            <summary>
+            Create an empty EngagementReachFeedback event args
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachFeedbackEventArgs.#ctor(System.String)">
+            <summary>
+            Create a EngagementReachFeedback event args
+            </summary>
+            <param name="body"></param>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.EngagementReachFeedbackEventArgs.Body">
+            <summary>
+            Body of the feedback
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.MessagesApiEventArgs">
+            <summary>
+            Event args implementation
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.MessagesApiEventArgs.HasSucceeded">
+            <summary>
+            Indicate if the API has returned correctly (with a OK status code).
+            </summary>
+            <returns>True if OK, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.MessagesApiEventArgs.HasMessages">
+            <summary>
+            Indicate if there is some messages.
+            </summary>
+            <returns>True if it's the case, false otherwise.</returns>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.MessagesApiEventArgs.StatusCode">
+            <summary>
+            The http status code of the request. Could be null.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementReachMessageException">
+            <summary>
+            Exceptions on Engagement reach messages.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachMessageException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Engagement.EngagementReachMessageException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementReachMessageException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Engagement.EngagementReachMessageException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.EngagementInvalidNotificationCreationException">
+            <summary>
+            EngagementInvalidNotificationCreationException
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.EngagementInvalidNotificationCreationException.#ctor(System.Exception)">
+            <summary>
+            Create a EngagementInvalidNotificationCreationException.
+            </summary>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="T:Microsoft.Azure.Engagement.ReachFactory">
+            <summary>
+            The Engagement reach factory to create instances.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.ReachFactory.sFactory">
+            <summary>
+            Unique static instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.ReachFactory.mPushService">
+            <summary>
+            Unique instance of the push servcie.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Engagement.ReachFactory.mAppLifeCycle">
+            <summary>
+            Manage command spool. The state machine starts the worker when it is ready.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.ReachFactory.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Engagement.ReachFactory"/> class. It must only be instanciated on the EngagementReach constructor. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.ReachFactory.CreatePushService">
+            <summary>
+            Create a Push service instance to manage communication with backend for push messges.
+            </summary>
+            <returns>
+            Instance of the engagement UI.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.ReachFactory.CreateEngagementUI">
+            <summary>
+            Create a engagement UI instance to interract with user interface.
+            </summary>
+            <returns>Instance of the engagement UI.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.ReachFactory.CreatePushChannel">
+            <summary>
+            Create a push channel instance to manage platform channel.
+            </summary>
+            <returns>Instance of a push Channel.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.ReachFactory.CreateStateMachine(Microsoft.Azure.Engagement.MessageSpool,Microsoft.Azure.Engagement.CommandWorker)">
+            <summary>
+            Create an state machine to manage interacive content.
+            </summary>
+            <returns>
+            Instance of an interactive content state machine.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.ReachFactory.CreateApplicationLifecycleManager">
+            <summary>
+            Return an IApplicationLifecycleManager implementation.
+            </summary>
+            <returns>IApplicationLifecycleManager implementation</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Engagement.ReachFactory.RunOnUI(System.Action)">
+            <summary>
+            Run an action on the UI thread.
+            </summary>
+            <param name="action">The action to be run on the UI thread.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Engagement.ReachFactory.Instance">
+            <summary>
+            Get or Set the unique instance of the reach factory.
+            </summary>
+        </member>
+    </members>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>7IxMFP+SzNLB7FzPBSvPALvQ8Tw=</DigestValue></Reference></SignedInfo><SignatureValue>
+    lhFLZso99T/BAeIohUv1l9pKFuqgphZT7NCzxIeVE1TVGK3QadVV6uVAwyDJhvtc49+Az4/G
+    67VKQrux6WWj/4vAHBcE2qLwMzGoFd3q7kogjcIXGtAZYTmhbAHdZIYP14m06qoyJ7H4erRa
+    GUicWf6t35NHkhIYcaFnLBf9monObNqrRM+1tu2QHAuWMtqpFRROZEQ96ZRFEc5H6fNnHDEo
+    l74oTEYkypkxS5DUShgrrS12CifA+lM0aJDr3a1Bf/14qVOr80GWgNmyg54+C0I2j8rzsb8z
+    fCl1WC2bTUu6w+QNgIKU5DHcNT5KYyAV2DC7wRjR/93wc2n8y+H4bw==
+  </SignatureValue><KeyInfo>
+      <KeyValue>
+        <RSAKeyValue>
+          <Modulus>
+            lnFd7QZG+oTLnVu3Rsew4bQROQOtsRVzYJzrp7ZuGjw//2XjNPGmpSFeVplsWOSSoQpcwtPc
+            Ui8MZZogYUBTMZxsjyF9uvn+E1BSYJU6W7lYpXRhQamU4K0mTkyhl3BJJ158Z8pPHnGERrwd
+            S7biD8XGJ8kH5noKpRcAGUxwRTgtgbRQqsVn0fp5vMXMoXKb9CU0mPhU3xI5OBIvpGulmn7H
+            YtHcz+09NPi53zUwuux5MqnhqaxVTUx/TFbDEwt28Qf5zEes+4jVUqUeKPo9Lc/PhJiGcWUR
+            z4XJCUSG4W/nsfysQESlqYsjP4JJndWWWVATWRhz/0MMrSvUfzBAZw==
+          </Modulus>
+          <Exponent>AQAB</Exponent>
+        </RSAKeyValue>
+      </KeyValue>
+      <X509Data>
+        <X509Certificate>
+          MIIE7DCCA9SgAwIBAgITMwAAAMps1TISNcThVQABAAAAyjANBgkqhkiG9w0BAQUFADB5MQsw
+          CQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwG
+          A1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSMwIQYDVQQDExpNaWNyb3NvZnQgQ29kZSBT
+          aWduaW5nIFBDQTAeFw0xNDA0MjIxNzM5MDBaFw0xNTA3MjIxNzM5MDBaMIGDMQswCQYDVQQG
+          EwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMV
+          TWljcm9zb2Z0IENvcnBvcmF0aW9uMQ0wCwYDVQQLEwRNT1BSMR4wHAYDVQQDExVNaWNyb3Nv
+          ZnQgQ29ycG9yYXRpb24wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCWcV3tBkb6
+          hMudW7dGx7DhtBE5A62xFXNgnOuntm4aPD//ZeM08aalIV5WmWxY5JKhClzC09xSLwxlmiBh
+          QFMxnGyPIX26+f4TUFJglTpbuVildGFBqZTgrSZOTKGXcEknXnxnyk8ecYRGvB1LtuIPxcYn
+          yQfmegqlFwAZTHBFOC2BtFCqxWfR+nm8xcyhcpv0JTSY+FTfEjk4Ei+ka6Wafsdi0dzP7T00
+          +LnfNTC67HkyqeGprFVNTH9MVsMTC3bxB/nMR6z7iNVSpR4o+j0tz8+EmIZxZRHPhckJRIbh
+          b+ex/KxARKWpiyM/gkmd1ZZZUBNZGHP/QwytK9R/MEBnAgMBAAGjggFgMIIBXDATBgNVHSUE
+          DDAKBggrBgEFBQcDAzAdBgNVHQ4EFgQUH17iXVCNVoa+SjzPBOinh7XLv4MwUQYDVR0RBEow
+          SKRGMEQxDTALBgNVBAsTBE1PUFIxMzAxBgNVBAUTKjMxNTk1K2I0MjE4ZjEzLTZmY2EtNDkw
+          Zi05YzQ3LTNmYzU1N2RmYzQ0MDAfBgNVHSMEGDAWgBTLEejK0rQWWAHJNy4zFha5TJoKHzBW
+          BgNVHR8ETzBNMEugSaBHhkVodHRwOi8vY3JsLm1pY3Jvc29mdC5jb20vcGtpL2NybC9wcm9k
+          dWN0cy9NaWNDb2RTaWdQQ0FfMDgtMzEtMjAxMC5jcmwwWgYIKwYBBQUHAQEETjBMMEoGCCsG
+          AQUFBzAChj5odHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpL2NlcnRzL01pY0NvZFNpZ1BD
+          QV8wOC0zMS0yMDEwLmNydDANBgkqhkiG9w0BAQUFAAOCAQEAd1zr15E9zb17g9mFqbBDnXN8
+          F8kP7Tbbx7UsG177VAU6g3FAgQmit3EmXtZ9tmw7yapfXQMYKh0nfgfpxWUftc8Nt1THKDha
+          iOd7wRm2VjK64szLk9uvbg9dRPXUsO8b1U7Brw7vIJvy4f4nXejF/2H2GdIoCiKd381wgp4Y
+          ctgjzHosQ+7/6sDg5h2qnpczAFJvB7jTiGzepAY1p8JThmURdwmPNVm52IaoAP74MX0s9IwF
+          ncDB1XdybOlNWSaD8cKyiFeTNQB8UCu8Wfz+HCk4gtPeUpdFKRhOlludul8bo/EnUOoHleht
+          NA04V9w3KDWVOjic1O1qhV0OIhFeew==
+        </X509Certificate>
+      </X509Data>
+      <X509Data>
+        <X509Certificate>
+          MIIFmTCCA4GgAwIBAgIQea0WoUqgpa1Mc1j0BxMuZTANBgkqhkiG9w0BAQUFADBfMRMwEQYK
+          CZImiZPyLGQBGRYDY29tMRkwFwYKCZImiZPyLGQBGRYJbWljcm9zb2Z0MS0wKwYDVQQDEyRN
+          aWNyb3NvZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkwHhcNMDEwNTA5MjMxOTIyWhcN
+          MjEwNTA5MjMyODEzWjBfMRMwEQYKCZImiZPyLGQBGRYDY29tMRkwFwYKCZImiZPyLGQBGRYJ
+          bWljcm9zb2Z0MS0wKwYDVQQDEyRNaWNyb3NvZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3Jp
+          dHkwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDzXfqAZ9Rap6kMLJAg0DUIPHWE
+          zbcHiZyJ2t7Ow2D6kWhanpRxKRh2fMLgyCV2lA5Y+gQ0Nubfr/eAuulYCyuT5Z0F43cikfc0
+          ZDwikR1e4QmQvBT+/HVYGeF5tweSo66IWQjYnwfKA1j8aCltMtfSqMtL/OELSDJP5uu4rU/k
+          XG8TlJnbldV126gat5SRtHdb9UgMj2p5fRRwBH1tr5D12nDYR7e/my9s5wW34RFgrHmRFHzF
+          1qbk4X7Vw37lktI8ALU2gt554W3ztW74nzPJy1J9c5g224uha6KVl5uj3sJNJv8GlmclBsjn
+          rOTuEjOVMZnINQhONMp5U9W1vmMyWUA2wKVOBE0921sHM+RYv+8/U2TYQlk1V/0PRXwkBE2e
+          1jh0EZcikM5oRHSSb9VLb7CG48c2QqDQ/MHAWvmjYbkwR3GWChawkcBCle8Qfyhq4yofseTN
+          Az93cQTHIPxJDx1FiKTXy36IrY4t7EXbxFEEySr87IaemhGXW97OU4jm4rf9rJXCKEDb7wSQ
+          34EzOdmyRaUjhwalVYkxuwYtYA5BGH0fLrWXyxHrFdUkpZTvFRSJ/Utz+jJb/NEzAPlZYnAH
+          Muouq0Ate8rdIWcbMJmPFqojqEHRsG4RmzbE3kB0nOFYZcFgHnpbOMiPuwQmfNQWQOW2a2yq
+          hv0Av87BNQIDAQABo1EwTzALBgNVHQ8EBAMCAcYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4E
+          FgQUDqyCYEBWJ5flJRP8KuEKU5VZ5KQwEAYJKwYBBAGCNxUBBAMCAQAwDQYJKoZIhvcNAQEF
+          BQADggIBAMURTQM6YN1dUhF3j7K7NsiyBb+0t6jYIJ1cEwO2HCL6BhM1tshj1JpHbyZX0lXx
+          BLEmX9apUGigvNK4bszD6azfGc14rFl0rGY0NsQbPmw4TDMOMBINoyb+UVMA/69aToQNDx/k
+          bQUuToVLjWwzb1TSZKu/UK99ejmgN+1jAw/8EwbOFjbUVDuVG1FiOuVNF9QFOZKaJ6hbqr3s
+          u77jIIlgcWxWs6UT0G0OI36VA+1oPfLYY7hrTbboMLXhypRL96KqXZkwsj2nwlFsKCABJCcr
+          SwC3nRFrcL6yEIK8DJto0I07JIeqmShynTNfWZC99d6TnjpiWjQ54ohVHbkGsMGJay3XacMZ
+          EjaE0Mmg2v8vaXiy5Xra69cMwPe9Yxe4ORM4ojZbe/KFVmodZGLBOOKqv1FmopT1EpxmIhBr
+          8rcwki3yKfA9OxRDaKLxnCk3y844ICVtfGfzfiQSJAMIgUfspZ6X9RjXz7vV73aW7/3O21ad
+          laBC+ZdY4dcxItNfWeY+biIA6kOEtiXb2fMIVmjAZGsdfOy2k6JiV24u2OdYj8QxSSbd3ik1
+          h/UwcXBbFDxpvYkSfesuo/7Yf56CWlIKK8FDK9kwiJ/IEPuJjeahhXUzfmye23MTZGJppS99
+          ypZtn/gETTCSPW4hFCHJPeDD/YprnUr90aGdmUN3P7Da
+        </X509Certificate>
+      </X509Data>
+      <X509Data>
+        <X509Certificate>
+          MIIFvDCCA6SgAwIBAgIKYTMmGgAAAAAAMTANBgkqhkiG9w0BAQUFADBfMRMwEQYKCZImiZPy
+          LGQBGRYDY29tMRkwFwYKCZImiZPyLGQBGRYJbWljcm9zb2Z0MS0wKwYDVQQDEyRNaWNyb3Nv
+          ZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkwHhcNMTAwODMxMjIxOTMyWhcNMjAwODMx
+          MjIyOTMyWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMH
+          UmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSMwIQYDVQQDExpNaWNy
+          b3NvZnQgQ29kZSBTaWduaW5nIFBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+          ALJyWVwZMGS/HZpgICBCmXZTbD4b1m/My/Hqa/6XFhDg3zp0gxq3L6Ay7P/ewkJOI9VyANs1
+          VwqJyq4gSfTwaKxNS42lvXlLcZtHB9r9Jd+ddYjPqnNEf9eB2/O98jakyVxF3K+tPeAoaJca
+          p6Vyc1bxF5Tk/TWUcqDWdl8ed0WDhTgW0HNbBbpnUo2lsmkv2hkL/pJ0KeJ2L1TdFDBZ+NKN
+          Yv3LyV9GMVC5JxPkQDDPcikQKCLHN049oDI9kM2hOAaFXE5WgigqBTK3S9dPY+fSLWLxRT3n
+          rAgA9kahntFbjCZT6HqqSvJGzzc8OJ60d1ylF56NyxGPVjzBrAlfA9MCAwEAAaOCAV4wggFa
+          MA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFMsR6MrStBZYAck3LjMWFrlMmgofMAsGA1Ud
+          DwQEAwIBhjASBgkrBgEEAYI3FQEEBQIDAQABMCMGCSsGAQQBgjcVAgQWBBT90TFO0yaKleGY
+          YDuoMW+mPLzYLTAZBgkrBgEEAYI3FAIEDB4KAFMAdQBiAEMAQTAfBgNVHSMEGDAWgBQOrIJg
+          QFYnl+UlE/wq4QpTlVnkpDBQBgNVHR8ESTBHMEWgQ6BBhj9odHRwOi8vY3JsLm1pY3Jvc29m
+          dC5jb20vcGtpL2NybC9wcm9kdWN0cy9taWNyb3NvZnRyb290Y2VydC5jcmwwVAYIKwYBBQUH
+          AQEESDBGMEQGCCsGAQUFBzAChjhodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpL2NlcnRz
+          L01pY3Jvc29mdFJvb3RDZXJ0LmNydDANBgkqhkiG9w0BAQUFAAOCAgEAWTk+fyZGr+tvQLEy
+          tWrrDi9uqEn361917Uw7LddDrQv+y+ktMaMjzHxQmIAhXaw9L0y6oqhWnONwu7i0+Hm1SXL3
+          PupBf8rhDBdpy6WcIC36C1DEVs0t40rSvHDnqA2iA6VW4LiKS1fylUKc8fPv7uOGHzQ8uFaa
+          8FMjhSqkghyT4pQHHfLiTviMocroE6WRTsgb0o9ylSpxbZsa+BzwU9ZnzCL/XB3Nooy9J7J5
+          Y1ZEolHN+emjWFbdmwJFRC9f9Nqu1IIybvyklRPk62nnqaIsvsgrEA5ljpnb9aL6EiYJZTiU
+          8XofSrvR4Vbo0HiWGFzJNRZf3ZMdSY4tvq00RBzuEBUaAF3dNVshzpjHCe6FDoxPbQ4TTj18
+          KUicctHzbMrB7HCjV5JXfZSNoBtIA1r3z6NnCnSlNu0tLxfI5nI3EvRvsTxngvlSso0zFmUe
+          DordEN5k9G/ORtTTF+l5xAS00/ss3x+KnqwK+xMnQK3k+eGpf0a7B2BHZWBATrBC7E7ts3Z5
+          2Ao0CW0cgDEf4g5U3eWh++VHEK1kmP9QFi58vwUheuKVQSdpw5OPlcmN2Jshrg1cnPCiroZo
+          gwxqLbt2awAdlq3yFnv2FoMkuYjPaqhHMS+a3ONxPdcAfmJH0c6IybgY+g5yjcGjPa8CQGr/
+          aZuW4hCoELQ3UAjWwz0=
+        </X509Certificate>
+      </X509Data>
+    </KeyInfo><Object id="ts-countersig"><X509Data><X509Certificate>MIIEuzCCA6OgAwIBAgITMwAAAFtDPHJBxWzA7gAAAAAAWzANBgkqhkiG9w0BAQUFADB3MQswCQYD
+VQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMV
+TWljcm9zb2Z0IENvcnBvcmF0aW9uMSEwHwYDVQQDExhNaWNyb3NvZnQgVGltZS1TdGFtcCBQQ0Ew
+HhcNMTQwNTIzMTcxMzE2WhcNMTUwODIzMTcxMzE2WjCBqzELMAkGA1UEBhMCVVMxCzAJBgNVBAgT
+AldBMRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xDTAL
+BgNVBAsTBE1PUFIxJzAlBgNVBAsTHm5DaXBoZXIgRFNFIEVTTjozMUM1LTMwQkEtN0M5MTElMCMG
+A1UEAxMcTWljcm9zb2Z0IFRpbWUtU3RhbXAgU2VydmljZTCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAJO2gxkc4ZlPSL6curaAqyM+cxMZpbyNUkEWY49+BhzsvpPybh2Hv1guJrhjk9Nm
+Y/SqrbCrUWX//TK650z4tkWiM7sUcRG8kpYzmfF61YdzcGDC+7phlMOg5nGmLtwTGbFq2hpkVe0U
+sh1SGEaJ7zeulRzx7RxaNj7W8O3EZU3vI0rjTMSQiWu01MqBr8x2Ubfgk6HU/n9P4aVT0jCY1/N3
+TEy+ijg5n2xyysvD32VFFsXQY0OnVRp45SEltH/EJ6gzunUPvJJyxhUdMzwvFSxnnr04pWcMkevA
+7zlstOXaidfEdn+xR/0FQABh70OHGnfHVlQCpqaNtV7rdHPfv0cCAwEAAaOCAQkwggEFMB0GA1Ud
+DgQWBBTNDGkkqFEi29Hu02Wg+BiCdff1IzAfBgNVHSMEGDAWgBQjNPjZUkZwCu1A+3b7syuwwzWz
+DzBUBgNVHR8ETTBLMEmgR6BFhkNodHRwOi8vY3JsLm1pY3Jvc29mdC5jb20vcGtpL2NybC9wcm9k
+dWN0cy9NaWNyb3NvZnRUaW1lU3RhbXBQQ0EuY3JsMFgGCCsGAQUFBwEBBEwwSjBIBggrBgEFBQcw
+AoY8aHR0cDovL3d3dy5taWNyb3NvZnQuY29tL3BraS9jZXJ0cy9NaWNyb3NvZnRUaW1lU3RhbXBQ
+Q0EuY3J0MBMGA1UdJQQMMAoGCCsGAQUFBwMIMA0GCSqGSIb3DQEBBQUAA4IBAQCFZLbdqiTl4Pvp
+aqSQwDnvTfrzf5LEB3/xqY832xz49neml+bIRHEIRH0KcJfJx68MK2DEhExOTZgsfvzoFn1H2ygK
+ORzb7OKHfCItu//Rl22AQK3v3SgzzkHZ53xu+bjJKyDaeDclxQR6COuUvJomC/QqzUG9/fyImMQZ
+HFcFElrogLzIiSei6vcVUY7azSrz5fs8ySz9spMa2vyM2Tc6t1R+HekTNMUfxQPaD1qVrCmFszlM
+z58CWcVSKd28O1SByMdZS+2LpzDPTLWVnyZVp2tnhF24jf+5oV+NLk82eOsbX8zMctyL36eb+8n+
+1flHpAnDRDpch5aHPlRovDSv</X509Certificate></X509Data><X509Data><X509Certificate>MIIGBzCCA++gAwIBAgIKYRZoNAAAAAAAHDANBgkqhkiG9w0BAQUFADBfMRMwEQYKCZImiZPyLGQB
+GRYDY29tMRkwFwYKCZImiZPyLGQBGRYJbWljcm9zb2Z0MS0wKwYDVQQDEyRNaWNyb3NvZnQgUm9v
+dCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkwHhcNMDcwNDAzMTI1MzA5WhcNMjEwNDAzMTMwMzA5WjB3
+MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwG
+A1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSEwHwYDVQQDExhNaWNyb3NvZnQgVGltZS1TdGFt
+cCBQQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCfoWyx39tIkip8ay4Z4b3i48WZ
+USNQrc7dGE4kD+7Rp9FMrXQwIBHrB9VUlRVJlBtCkq6YXDAm2gBr6Hu97IkHD/cOBJjwicwfyzMk
+h53y9GccLPx754gd6udOo6HBI1PKjfpFzwnQXq/QsEIEovmmbJNn1yjcRlOwhtDlKEYuJ6yGT1VS
+DOQDLPtqkJAwbofzWTCd+n7Wl7PoIZd++NIT8wi3U21StEWQn0gASkdmEScpZqiX5NMGgUqi+YSn
+EUcUCYKfhO1VeP4Bmh1QCIUAEDBG7bfeI0a7xC1Un68eeEExd8yb3zuDk6FhArUdDbH895uyAc4i
+S1T/+QXDwiALAgMBAAGjggGrMIIBpzAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBQjNPjZUkZw
+Cu1A+3b7syuwwzWzDzALBgNVHQ8EBAMCAYYwEAYJKwYBBAGCNxUBBAMCAQAwgZgGA1UdIwSBkDCB
+jYAUDqyCYEBWJ5flJRP8KuEKU5VZ5KShY6RhMF8xEzARBgoJkiaJk/IsZAEZFgNjb20xGTAXBgoJ
+kiaJk/IsZAEZFgltaWNyb3NvZnQxLTArBgNVBAMTJE1pY3Jvc29mdCBSb290IENlcnRpZmljYXRl
+IEF1dGhvcml0eYIQea0WoUqgpa1Mc1j0BxMuZTBQBgNVHR8ESTBHMEWgQ6BBhj9odHRwOi8vY3Js
+Lm1pY3Jvc29mdC5jb20vcGtpL2NybC9wcm9kdWN0cy9taWNyb3NvZnRyb290Y2VydC5jcmwwVAYI
+KwYBBQUHAQEESDBGMEQGCCsGAQUFBzAChjhodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpL2Nl
+cnRzL01pY3Jvc29mdFJvb3RDZXJ0LmNydDATBgNVHSUEDDAKBggrBgEFBQcDCDANBgkqhkiG9w0B
+AQUFAAOCAgEAEJeKw1wDRDbd6bStd9vOeVFNAbEudHFbbQwTq86+e4+4LtQSooxtYrhXAstOIBNQ
+md16QOJXu69YmhzhHQGGrLt48ovQ7DsB7uK+jwoFyI1I4vBTFd1Pq5Lk541q1YDB5pTyBi+FA+mR
+KiQicPv2/OR4mS4N9wficLwYTp2OawpylbihOZxnLcVRDupiXD8WmIsgP+IHGjL5zDFKdjE9K3IL
+yOpwPf+FChPfwgphjvDXuBfrTot/xTUrXqO/67x9C0J71FNyIe4wyrt4ZVxbARcKFA7S2hSY9Ty5
+ZlizLS/n+YWGzFFW6J1wlGysOUzU9nm/qhh6YinvopspNAZ3GmLJPR5tH4LwC8csu89Ds+X57H21
+46SodDW4TsVxIxImdgs8UoxxWkZDFLyzs7BNZ8ifQv+AeSGAnhUwZuhCEl4ayJ4iIdBD6Svpu/RI
+zCzU2DKATCYqSCRfWupW76bemZ3KOm+9gSd0BhHudiG/m4LBJ1S2sWo9iaF2YbRuoROmv6pH8BJv
+/YoybLL+31HIjCPJZr2dHYcSZAI9La9Zj7jkIeW1sMpjtHhUBdRBLlCslLCleKuzoJZ1GtmShxN1
+Ii8yqAhuoFuMJb+g74TKIdbrHk/Jmu5J4PcBZW+JC33Iacjmbuqnl84xKf8OxVtc2E0bodj6L54/
+LlUWa8kTo/0=</X509Certificate></X509Data><CounterSignature xmlns="http://schemas.microsoft.com/xmldsig/timestamp/2003" ts-format="cms-timestamp-message">MIIGyQYJKoZIhvcNAQcCoIIGujCCBrYCAQMxCzAJBgUrDgMCGgUAMIIBEwYJKoZIhvcNAQcBoIIB
+BASCAQCWEUtmyj31P8EB4iiFS/WX2koW6qCmFlPs0LPEh5UTVNUYrdBp1VXq5UDDIMmG+1zj34DP
+j8brtUpCu7HpZaP/i8AcFwTaovAzMagV3eruSiCNwhca0BlhOaFsAd1khg/XibTqqjInsfh6tFoZ
+SJxZ/q3fk0eSEhhxoWcsF/2aic5s2qtEz7W27ZAcC5Yy2qkVFE5kRD3plEURzkfp82ccMSiXvihM
+RiTKmTFLkNRKGCutLXYKJ8D6UzRokOvdrUF//XipU6vzQZaA2bKDnj4LQjaPyvOxvzN8KXVYLZtN
+S7rD5A2AgpTkMdw1PkpjIBXYMLvBGNH/3fBzafzL4fhvoIIDcqGCA24wggJWAgEBMIHboYGxpIGu
+MIGrMQswCQYDVQQGEwJVUzELMAkGA1UECBMCV0ExEDAOBgNVBAcTB1JlZG1vbmQxHjAcBgNVBAoT
+FU1pY3Jvc29mdCBDb3Jwb3JhdGlvbjENMAsGA1UECxMETU9QUjEnMCUGA1UECxMebkNpcGhlciBE
+U0UgRVNOOjMxQzUtMzBCQS03QzkxMSUwIwYDVQQDExxNaWNyb3NvZnQgVGltZS1TdGFtcCBTZXJ2
+aWNloiUKAQEwCQYFKw4DAhoFAAMVACgI5jPW6+ucStSwO6kgUfU5Rg5DoIHCMIG/pIG8MIG5MQsw
+CQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UE
+ChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMQ0wCwYDVQQLEwRNT1BSMScwJQYDVQQLEx5uQ2lwaGVy
+IE5UUyBFU046NTdGNi1DMUUwLTU1NEMxKzApBgNVBAMTIk1pY3Jvc29mdCBUaW1lIFNvdXJjZSBN
+YXN0ZXIgQ2xvY2swDQYJKoZIhvcNAQEFBQACBQDYjKCOMCIYDzIwMTUwMjE2MTY1OTU4WhgPMjAx
+NTAyMTcxNjU5NThaMHQwOgYKKwYBBAGEWQoEATEsMCowCgIFANiMoI4CAQAwBwIBAAICHCEwBwIB
+AAICGGYwCgIFANiN8g4CAQAwNgYKKwYBBAGEWQoEAjEoMCYwDAYKKwYBBAGEWQoDAaAKMAgCAQAC
+AxbjYKEKMAgCAQACAwehIDANBgkqhkiG9w0BAQUFAAOCAQEApM98eJzpo28GY7yVHFfU1E5NPXe5
+ILhTBHa4tRP9UO1R69JqPIXjx8hmaALE8lv3xboiqseJ2cO+iedKsRh2o1JYhBRzbP2wDWep8eYw
+R4cax72uMoZdF0reW7GsFd0zl2yFVZv6F0i2QIPeQ8gSZWQwQMV9GWFfYKa/WagkAMxs4HKh5UH8
+LG/n1N/kOHAhgWoBhMpLjtv/cEKoaILMSB8GigB6ulg0OT5uwZ9gmkg52tYB7XIZr2iBqrRLy8eW
+Fc/021DCkik8RiMr4m6jCjdDsea2iIy1GyN5L/POvZtIIVoPbcVkJxL8WKXoz4iisdZ2VzC+IDS8
+Pbmc+KoD2zGCAhUwggIRAgEBMIGOMHcxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9u
+MRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xITAfBgNV
+BAMTGE1pY3Jvc29mdCBUaW1lLVN0YW1wIFBDQQITMwAAAFtDPHJBxWzA7gAAAAAAWzAJBgUrDgMC
+GgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTUwMjE3MDMz
+NzQxWjAjBgkqhkiG9w0BCQQxFgQUd7MJ3vQK276Ozd2a+9hz//GEWVMwDQYJKoZIhvcNAQEFBQAE
+ggEAOYZ4m2qGd7nIPjAQks0sSkCgxP172rT8cqsVETUYAfvDy3g/kYEQTsVwF68PByed5u/orSi3
+Vq6+TXo3+RJ+Jfyq+VjXu7SETteLc9iRGDPFnbcK0aM16bAFlsMxsfKTKAeiDvsHGma71tYT+26p
+B/YL8mvtXvvk2j4IP4aNWqb0iaDmeKa94z42Y/kOQpdHFiYAVRPedzxJLMtXvqiTTZYY0qpNq3mT
+LO13VfNaEOCNjLYRFOir4sWkcxCGF6OF3xWXvAocCwBrXmzY/4sOCkR1vAsN3W54XSdf12sMwtGl
+m4S4tJ0lzq2PQyBXgu/n/zHGrTH3S6ZDhPvsUvgQOg==</CounterSignature></Object></Signature></doc>

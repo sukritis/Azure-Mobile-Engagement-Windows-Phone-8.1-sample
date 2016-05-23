@@ -1,0 +1,9 @@
+﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="MobileEngagementDemo" EntryPointType="MobileEngagementDemo.App" RuntimeVersion="6.7.50308.0">
+  <Deployment.Parts>
+    <AssemblyPart x:Name="MobileEngagementDemo" Source="MobileEngagementDemo.dll" />
+    <AssemblyPart x:Name="Microsoft.Azure.Engagement.EngagementAgent.Portable" Source="Microsoft.Azure.Engagement.EngagementAgent.Portable.dll" />
+    <AssemblyPart x:Name="Microsoft.Azure.Engagement.EngagementAgent.WP" Source="Microsoft.Azure.Engagement.EngagementAgent.WP.dll" />
+    <AssemblyPart x:Name="Microsoft.Azure.Engagement.EngagementReach.Portable" Source="Microsoft.Azure.Engagement.EngagementReach.Portable.dll" />
+    <AssemblyPart x:Name="Microsoft.Azure.Engagement.EngagementReach.WP" Source="Microsoft.Azure.Engagement.EngagementReach.WP.dll" />
+  </Deployment.Parts>
+</Deployment>

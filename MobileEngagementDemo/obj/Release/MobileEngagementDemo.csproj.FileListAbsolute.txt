@@ -1,0 +1,137 @@
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\ApplicationIcon.png
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\FlipCycleTileLarge.png
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\FlipCycleTileMedium.png
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\FlipCycleTileSmall.png
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\IconicTileMediumLarge.png
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\IconicTileSmall.png
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo.dll
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo.pdb
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\resources.pri
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\AppxManifest.xml
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo.build.appxrecipe
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Properties\WMAppManifest.xml
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\AppManifest.xaml
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo_Release_AnyCPU.xap
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.Portable.dll
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.WP.dll
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.Portable.dll
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.WP.dll
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.Portable.xml
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.WP.xml
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.Portable.xml
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.WP.xml
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\App.g.cs
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MainPage.g.cs
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.g.resources
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.Resources.AppResources.resources
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.csproj.GenerateResource.Cache
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.dll
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.pdb
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\priconfig.xml
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\priconfig.xml.intermediate
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\layout.resfiles
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\layout.resfiles.intermediate
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\resources.resfiles
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\resources.resfiles.intermediate
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\pri.resfiles
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\pri.resfiles.intermediate
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\qualifiers.txt
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\qualifiers.txt.intermediate
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MultipleQualifiersPerDimensionFound.txt
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\ProjectArchitectures.txt
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MDILProjectFiles.xml
+C:\Users\sukritis\Documents\Visual Studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\XapCacheFile.xml
+C:\Users\sukritis\documents\visual studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.csprojResolveAssemblyReference.cache
+C:\Users\sukritis\documents\visual studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\SecondPage.g.cs
+C:\Users\sukritis\documents\visual studio 2013\Projects\MobileEngagementDemo\MobileEngagementDemo\obj\Release\ThirdPage.g.cs
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\ApplicationIcon.png
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\FlipCycleTileLarge.png
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\FlipCycleTileMedium.png
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\FlipCycleTileSmall.png
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\IconicTileMediumLarge.png
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\IconicTileSmall.png
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo.dll
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo.pdb
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\resources.pri
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\AppxManifest.xml
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo.build.appxrecipe
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Properties\WMAppManifest.xml
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\AppManifest.xaml
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo_Release_AnyCPU.xap
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.Portable.dll
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.WP.dll
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.Portable.dll
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.WP.dll
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.Portable.xml
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.WP.xml
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.Portable.xml
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.WP.xml
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\App.g.cs
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MainPage.g.cs
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\SecondPage.g.cs
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\ThirdPage.g.cs
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.g.resources
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.Resources.AppResources.resources
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.csproj.GenerateResource.Cache
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.dll
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.pdb
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\priconfig.xml
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\priconfig.xml.intermediate
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\layout.resfiles
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\layout.resfiles.intermediate
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\resources.resfiles
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\resources.resfiles.intermediate
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\pri.resfiles
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\pri.resfiles.intermediate
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\qualifiers.txt
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\qualifiers.txt.intermediate
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MultipleQualifiersPerDimensionFound.txt
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\ProjectArchitectures.txt
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MDILProjectFiles.xml
+C:\PERSONAL\WORK\FY16\Future Unleashed\WP Code\Working\MobileEngagementDemo\MobileEngagementDemo\obj\Release\XapCacheFile.xml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\ApplicationIcon.png
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\FlipCycleTileLarge.png
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\FlipCycleTileMedium.png
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\FlipCycleTileSmall.png
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\IconicTileMediumLarge.png
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Assets\Tiles\IconicTileSmall.png
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo.dll
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo.pdb
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\resources.pri
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\AppxManifest.xml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo.build.appxrecipe
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Properties\WMAppManifest.xml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\AppManifest.xaml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\MobileEngagementDemo_Release_AnyCPU.xap
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.Portable.dll
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.WP.dll
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.Portable.dll
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.WP.dll
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.Portable.xml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementAgent.WP.xml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.Portable.xml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\Bin\Release\Microsoft.Azure.Engagement.EngagementReach.WP.xml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.csprojResolveAssemblyReference.cache
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\App.g.cs
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MainPage.g.cs
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\SecondPage.g.cs
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\ThirdPage.g.cs
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.g.resources
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.Resources.AppResources.resources
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.csproj.GenerateResource.Cache
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.dll
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MobileEngagementDemo.pdb
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\priconfig.xml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\priconfig.xml.intermediate
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\layout.resfiles
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\layout.resfiles.intermediate
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\resources.resfiles
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\resources.resfiles.intermediate
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\pri.resfiles
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\pri.resfiles.intermediate
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\qualifiers.txt
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\qualifiers.txt.intermediate
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MultipleQualifiersPerDimensionFound.txt
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\ProjectArchitectures.txt
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\MDILProjectFiles.xml
+C:\PERSONAL\WORK\STUDY MATERIAL\Publish to Github\MobileEngagementDemo\MobileEngagementDemo\obj\Release\XapCacheFile.xml
