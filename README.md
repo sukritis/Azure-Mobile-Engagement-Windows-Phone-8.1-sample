@@ -1,4 +1,4 @@
-# AzMEWP81sample
+# Azure Mobile Engagement Windows Phone 8.1 Sample
 Azure Mobile Engagement sample for Windows Phone 8.1 with all basic features of AzME including error, crash, job, event reporting as well as Reach
 
 Features:
